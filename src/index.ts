@@ -27,16 +27,16 @@ const generateMarkdownMessage = (prs: PullRequest[], repo: { owner: string, repo
     const messages = prs.map(pr => {
         return `  - [${pr.title}](${pr.html_url}) - Stale for ${daysSinceDate(pr.updated_at)} days`;
     });
-    const markdownMessage = `### Repo ${repo.owner}/${repo.repo} has ${prs.length} stale issues\n${messages.join("\n")}`;
+    const markdownMessage = `### Repo ${repo.owner}/${repo.repo} has ${prs.length} stale PRs\n${messages.join("\n")}`;
     return markdownMessage;
 }
 
-const filterPRs = (issues: PullRequest[], filters: Filters) => {
-    if (!issues || issues.length < 1) {
+const filterPRs = (prs: PullRequest[], filters: Filters) => {
+    if (!prs || prs.length < 1) {
         return [];
     }
 
-    let filteredData = issues;
+    let filteredData = prs;
     if (filters.daysStale) {
         filteredData = filteredData.filter(pr => olderThanDays(pr, filters.daysStale));
     }
