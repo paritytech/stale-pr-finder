@@ -1,0 +1,38 @@
+{
+  "name": "stale-pr-finder",
+  "version": "0.0.1",
+  "description": "GitHub action that finds stale PRs and produce an output with them",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "ncc build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paritytech/stale-pr-finder.git"
+  },
+  "keywords": [
+    "github-action",
+    "stale",
+    "pr",
+    "pull",
+    "requests",
+    "github"
+  ],
+  "author": "Javier Bullrich <javier.bullrich@parity.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paritytech/stale-pr-finder/issues"
+  },
+  "homepage": "https://github.com/paritytech/stale-pr-finder#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1",
+    "moment": "^2.29.4"
+  },
+  "devDependencies": {
+    "@types/moment": "^2.13.0",
+    "@types/node": "^18.15.11",
+    "@vercel/ncc": "^0.36.1",
+    "typescript": "^5.0.4"
+  }
+}
