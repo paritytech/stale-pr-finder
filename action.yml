@@ -1,0 +1,37 @@
+name: "Stale PRs Finder"
+description: "Find what PRs have been stale for a given time"
+author: paritytech
+branding:
+  icon: zoom-in
+  color: red
+inputs:
+  GITHUB_TOKEN:
+    required: true
+    description: The token to access the repo
+  repo:
+    required: false
+    description: The repository to fetch the issues from
+  owner:
+    required: false
+    description: The name of the org/user that owns the repository
+  days-stale:
+    required: false
+    description: How many days have to pass to consider a pull request "stale"
+    default: '5'
+  noReviews:
+    required: false
+    description: If true, it will only collect PRs with NO reviews.
+    default: false
+outputs:
+  repo:
+    description: 'The name of the repo in owner/repo pattern'
+  data:
+    description: 'A JSON object with the data'
+  message:
+    description: 'A markdown formatted message'
+  stale:
+    description: 'Amount of stale prs. 0 if none found.'
+
+runs:
+  using: 'docker'
+  image: 'docker://ghcr.io/paritytech/stale-pr-finder/action:0.0.1'
