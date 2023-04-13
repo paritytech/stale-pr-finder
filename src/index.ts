@@ -48,6 +48,8 @@ const filterPRs = (prs: PullRequest[], filters: Filters) => {
 }
 
 const getRepo = (ctx: Context): Repo => {
+    const repo = getInput("repo", { required: false });
+    const owner = getInput("owner", { required: false });
 
     if (repo && owner) {
         return { repo, owner };
