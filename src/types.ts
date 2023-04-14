@@ -20,3 +20,5 @@ interface Review {
     html_url: string,
     pull_request_url: string
 }
+
+export type Repo = { owner: string, repo: string };
