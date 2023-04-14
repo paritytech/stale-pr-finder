@@ -1,6 +1,7 @@
 import { debug, getBooleanInput, getInput, info, setOutput, summary } from "@actions/core";
-import { context, getOctokit } from "@actions/github";
+import { context } from "@actions/github";
 import { Context } from "@actions/github/lib/context";
+import { github } from "@eng-automation/integrations";
 import moment from "moment";
 import { byNoReviews, olderThanDays } from "./filters";
 import { getPullRequestWithReviews } from "./githubApi";
@@ -70,7 +71,7 @@ const runAction = async (ctx: Context) => {
     const stale = isNaN(daysStale);
     console.log("daysStale", daysStale, stale);
 
-    const octokit = getOctokit(token);
+    const octokit = await github.getInstance({ authType: "token", authToken: token })
     const prs = await getPullRequestWithReviews(octokit, repo);
 
     let filterReviews = filterPRs(prs, filters);
