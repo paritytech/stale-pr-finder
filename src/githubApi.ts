@@ -3,7 +3,7 @@ import { github } from "@eng-automation/integrations";
 import { PullRequest, Repo } from "./types";
 
 export const getPullRequestWithReviews = async (octokitInstance: github.GitHubInstance, repo: Repo): Promise<PullRequest[]> => {
-    const prs = await github.getPullRequests(repo, { octokitInstance });
+    const prs = await github.getPullRequests({ state: "open", ...repo }, { octokitInstance });
     debug(`Found a total of ${prs.length} PRs`);
 
     const reviews = await Promise.all(prs.map(async (pr) => {
