@@ -1,7 +1,8 @@
-import { debug, getBooleanInput, getInput, info, setOutput, summary } from "@actions/core";
+import { debug, getBooleanInput, getInput, info, setFailed, setOutput, summary } from "@actions/core";
 import { context } from "@actions/github";
 import { Context } from "@actions/github/lib/context";
 import { github } from "@eng-automation/integrations";
+import { writeFile } from "fs";
 import moment from "moment";
 import { byNoReviews, olderThanDays } from "./filters";
 import { getPullRequestWithReviews } from "./githubApi";
@@ -72,6 +73,7 @@ const runAction = async (ctx: Context) => {
     const inputDays = Number.parseInt(getInput("days-stale", { required: false }));
     const daysStale = isNaN(inputDays) ? 5 : inputDays;
     const stale = isNaN(daysStale);
+    const outputFile = getInput("fileOutput", { required: false });
     console.log("daysStale", daysStale, stale);
 
     const octokit = await github.getInstance({ authType: "token", authToken: token })
@@ -102,6 +104,14 @@ const runAction = async (ctx: Context) => {
         setOutput("data", jsonData);
         const message = generateMarkdownMessage(filterReviews, repo);
         setOutput("message", message);
+
+        if (outputFile) {
+            writeFile(outputFile, jsonData, err => {
+                if (err) {
+                    setFailed(err);
+                }
+            })
+        }
 
         await summary.addHeading(`${repo.owner}/${repo.repo}`)
             .addHeading(`${amountOfStalePrs} stale PRs`, 3)
