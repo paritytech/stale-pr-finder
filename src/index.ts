@@ -1,4 +1,4 @@
-import { debug, getBooleanInput, getInput, info, setFailed, setOutput, summary } from "@actions/core";
+import { debug, getBooleanInput, getInput, info, setOutput, summary } from "@actions/core";
 import { context } from "@actions/github";
 import { Context } from "@actions/github/lib/context";
 import { github } from "@eng-automation/integrations";
@@ -12,6 +12,18 @@ type Filters = { daysStale: number, noReviews: boolean };
 
 const daysSinceDate = (date: string): number => {
     return moment().diff(moment(date), 'days')
+}
+
+const writeToFile = async (fileName: string, content: string) => {
+    return new Promise<void>((res, rej) => {
+        writeFile(fileName, content, err => {
+            if (err) {
+                rej(err)
+            } else {
+                res();
+            }
+        })
+    })
 }
 
 const getFiltersFromInput = (): Filters => {
@@ -106,11 +118,7 @@ const runAction = async (ctx: Context) => {
         setOutput("message", message);
 
         if (outputFile) {
-            writeFile(outputFile, jsonData, err => {
-                if (err) {
-                    setFailed(err);
-                }
-            })
+            await writeToFile(outputFile, jsonData);
         }
 
         await summary.addHeading(`${repo.owner}/${repo.repo}`)
@@ -123,6 +131,9 @@ const runAction = async (ctx: Context) => {
     } else {
         setOutput("message", `### Repo ${repo.owner}/${repo.repo} has no stale Pull Requests`);
         info(`Repo ${repo.owner}/${repo.repo} has no stale Pull Requests`);
+        if (outputFile) {
+            await writeToFile(outputFile, "[]");
+        }
     }
 }
 
