@@ -22,6 +22,9 @@ inputs:
     required: false
     description: If true, it will only collect PRs with NO reviews.
     default: false
+  fileOutput:
+    required: false
+    description: File to which the output data should be written.
 outputs:
   repo:
     description: 'The name of the repo in owner/repo pattern'
