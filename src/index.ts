@@ -49,14 +49,17 @@ const filterPRs = (prs: PullRequest[], filters: Filters) => {
 }
 
 const getRepo = (ctx: Context): Repo => {
-    const repo = getInput("repo", { required: false });
-    const owner = getInput("owner", { required: false });
-
-    if (repo && owner) {
-        return { repo, owner };
-    } else {
-        return ctx.repo;
+    let repo = getInput("repo", { required: false });
+    if (!repo) {
+        repo = ctx.repo.repo;
     }
+
+    let owner = getInput("owner", { required: false });
+    if (!owner) {
+        owner = ctx.repo.owner;
+    }
+
+    return { repo, owner };
 }
 
 const runAction = async (ctx: Context) => {
