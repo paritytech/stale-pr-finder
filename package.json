@@ -1,6 +1,6 @@
 {
   "name": "stale-pr-finder",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "GitHub action that finds stale PRs and produce an output with them",
   "main": "src/index.ts",
   "scripts": {

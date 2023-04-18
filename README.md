@@ -67,6 +67,7 @@ You can find all the inputs in [the action file](./action.yml) but let's walk th
   - **default**: false
 - `fileOutput`: String. File to which the output from `data` should be written. 
   - Useful in the cases where the output is too big and GitHub Actions can not handle it as a variable.
+  - Make sure that the directory exists, else it will fail
 
 #### Accessing other repositories
 
