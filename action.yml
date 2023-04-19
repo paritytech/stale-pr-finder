@@ -22,6 +22,10 @@ inputs:
     required: false
     description: If true, it will only collect PRs with NO reviews.
     default: false
+  ignoreDrafts:
+    required: false
+    description: If true, it ignore draft Pull Requests.
+    default: true
   fileOutput:
     required: false
     description: File to which the output data should be written.

@@ -65,6 +65,8 @@ You can find all the inputs in [the action file](./action.yml) but let's walk th
 - `noComments`: Boolean. If the action should only fetch Pull Requests that have 0 reviews (comments do not count).
   - Short for `Ignore PRs that have comments`.
   - **default**: false
+- `ignoreDrafts`: Boolean. If the action should ignore Pull Requests that are [draft](https://github.blog/2019-02-14-introducing-draft-pull-requests/)
+  - **default**: true
 - `fileOutput`: String. File to which the output from `data` should be written. 
   - Useful in the cases where the output is too big and GitHub Actions can not handle it as a variable.
   - Make sure that the directory exists, else it will fail
