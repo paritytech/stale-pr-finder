@@ -8,7 +8,7 @@ import { byNoReviews, olderThanDays } from "./filters";
 import { getPullRequestWithReviews } from "./githubApi";
 import { PullRequest, Repo } from "./types";
 
-type Filters = { daysStale: number, noReviews: boolean };
+type Filters = { daysStale: number, noReviews: boolean, ignoreDrafts: boolean };
 
 const daysSinceDate = (date: string): number => {
     return moment().diff(moment(date), 'days')
@@ -32,8 +32,10 @@ const getFiltersFromInput = (): Filters => {
 
     const noReviews = !!getInput("noComments") ? getBooleanInput("noReviews") : false;
 
+    const ignoreDrafts = !!getInput("ignoreDrafts") ? getBooleanInput("ignoreDrafts") : true;
+
     return {
-        daysStale, noReviews
+        daysStale, noReviews, ignoreDrafts
     }
 }
 
@@ -56,6 +58,9 @@ const filterPRs = (prs: PullRequest[], filters: Filters) => {
     }
     if (filters.noReviews) {
         filteredData = filteredData.filter(byNoReviews);
+    }
+    if(filters.ignoreDrafts) {
+        filteredData = filteredData.filter(pr => !pr.draft);
     }
 
     return filteredData;
