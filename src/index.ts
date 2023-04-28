@@ -4,11 +4,11 @@ import { Context } from "@actions/github/lib/context";
 import { github } from "@eng-automation/integrations";
 import { writeFile } from "fs";
 import moment from "moment";
-import { byNoReviews, olderThanDays } from "./filters";
+import { byLabels, byNoReviews, olderThanDays } from "./filters";
 import { getPullRequestWithReviews } from "./githubApi";
 import { PullRequest, Repo } from "./types";
 
-type Filters = { daysStale: number, noReviews: boolean, ignoreDrafts: boolean };
+type Filters = { daysStale: number, noReviews: boolean, ignoreDrafts: boolean, requiredLabels: string[] };
 
 const daysSinceDate = (date: string): number => {
     return moment().diff(moment(date), 'days')
@@ -34,8 +34,14 @@ const getFiltersFromInput = (): Filters => {
 
     const ignoreDrafts = !!getInput("ignoreDrafts") ? getBooleanInput("ignoreDrafts") : true;
 
+    let requiredLabels: string[] = [];
+    const labels = getInput("requiredLabels");
+    if (labels) {
+        requiredLabels = labels.split(",");
+    }
+
     return {
-        daysStale, noReviews, ignoreDrafts
+        daysStale, noReviews, ignoreDrafts, requiredLabels
     }
 }
 
@@ -59,8 +65,11 @@ const filterPRs = (prs: PullRequest[], filters: Filters) => {
     if (filters.noReviews) {
         filteredData = filteredData.filter(byNoReviews);
     }
-    if(filters.ignoreDrafts) {
+    if (filters.ignoreDrafts) {
         filteredData = filteredData.filter(pr => !pr.draft);
+    }
+    if (filters.requiredLabels && filters.requiredLabels.length > 0) {
+        filteredData = filteredData.filter(fd => byLabels(fd, filters.requiredLabels));
     }
 
     return filteredData;

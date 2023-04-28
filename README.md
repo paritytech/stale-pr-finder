@@ -70,6 +70,12 @@ You can find all the inputs in [the action file](./action.yml) but let's walk th
 - `fileOutput`: String. File to which the output from `data` should be written. 
   - Useful in the cases where the output is too big and GitHub Actions can not handle it as a variable.
   - Make sure that the directory exists, else it will fail
+- `requiredLabels`: Collections of labels separated by commas that should be required when searching for a PR.
+  - Short for `Ignore PRs without any of the required labels`.
+  - **optional**
+  - **Important**: If set be sure to connect the names by comma.
+    - Example: `feature,bug,good first issue`
+    - It is **not** _case sensitive_.
 
 #### Accessing other repositories
 
