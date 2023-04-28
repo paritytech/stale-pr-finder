@@ -12,6 +12,7 @@ export interface PullRequest {
     _links: { html: { href: string } };
     author_association: string;
     reviews: Review[];
+    labels: Label[];
 }
 
 interface Review {
@@ -19,6 +20,13 @@ interface Review {
     user: { login: string } | null,
     html_url: string,
     pull_request_url: string
+}
+
+interface Label {
+    id: number;
+    url: string;
+    name: string;
+    description: string;
 }
 
 export type Repo = { owner: string, repo: string };
