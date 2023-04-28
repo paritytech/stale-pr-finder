@@ -4,7 +4,7 @@ import { Context } from "@actions/github/lib/context";
 import { github } from "@eng-automation/integrations";
 import { writeFile } from "fs";
 import moment from "moment";
-import { byNoReviews, olderThanDays } from "./filters";
+import { byLabels, byNoReviews, olderThanDays } from "./filters";
 import { getPullRequestWithReviews } from "./githubApi";
 import { PullRequest, Repo } from "./types";
 
@@ -67,6 +67,9 @@ const filterPRs = (prs: PullRequest[], filters: Filters) => {
     }
     if (filters.ignoreDrafts) {
         filteredData = filteredData.filter(pr => !pr.draft);
+    }
+    if (filters.requiredLabels && filters.requiredLabels.length > 0) {
+        filteredData = filteredData.filter(fd => byLabels(fd, filters.requiredLabels));
     }
 
     return filteredData;

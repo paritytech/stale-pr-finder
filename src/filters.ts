@@ -9,6 +9,6 @@ export const byNoReviews = (pr: PullRequest): boolean => {
     return !pr.reviews || pr.reviews.length === 0;
 }
 
-export const byLabels = (pr:PullRequest, labels:string[]): boolean => {
-    return pr.labels && pr.labels.map(l => l.name).some(l => labels.includes(l));
+export const byLabels = (pr: PullRequest, labels: string[]): boolean => {
+    return pr.labels && pr.labels.map(l => l.name.toLowerCase()).some(l => labels.map(l => l.toLowerCase()).includes(l));
 }
