@@ -29,6 +29,10 @@ inputs:
   fileOutput:
     required: false
     description: File to which the output data should be written.
+  requiredLabels:
+    required: false
+    description: Collections of labels separated by commas that should be required when searching for a PR.
+    type: string
 outputs:
   repo:
     description: 'The name of the repo in owner/repo pattern'

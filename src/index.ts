@@ -35,7 +35,7 @@ const getFiltersFromInput = (): Filters => {
     const ignoreDrafts = !!getInput("ignoreDrafts") ? getBooleanInput("ignoreDrafts") : true;
 
     let requiredLabels: string[] = [];
-    const labels = getInput("requireLabels");
+    const labels = getInput("requiredLabels");
     if (labels) {
         requiredLabels = labels.split(",");
     }
