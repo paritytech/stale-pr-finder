@@ -18,6 +18,7 @@ module.exports = {
       rules: {
         ...tsConfOverride.rules,
         "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/strict-boolean-expressions": "off",
       },
     },
   ],
