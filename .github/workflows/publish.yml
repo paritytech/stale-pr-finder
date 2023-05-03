@@ -16,6 +16,14 @@ jobs:
       - name: Check that the image builds
         run: docker build . --file Dockerfile
 
+  test-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.3.0
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
+      - run: yarn build
+
   test-versions:
     runs-on: ubuntu-latest
     steps:
@@ -44,7 +52,7 @@ jobs:
 
   tag:
     if: github.event_name == 'push'
-    needs: [test-image, test-versions]
+    needs: [test-image, test-versions, test-code]
     runs-on: ubuntu-latest
     permissions:
       contents: write
