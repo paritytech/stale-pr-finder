@@ -4,7 +4,12 @@
   "description": "GitHub action that finds stale PRs and produce an output with them",
   "main": "src/index.ts",
   "scripts": {
-    "build": "ncc build"
+    "build": "ncc build",
+    "typecheck": "tsc --noEmit",
+    "lint": "yarn eslint --quiet '{*,**/*}.{js,ts}' && yarn prettier --check '{*,**/*}.json' && yarn typecheck",
+    "fix:eslint": "eslint --fix",
+    "fix:prettier": "prettier --write",
+    "fix": "yarn fix:eslint '{*,**/*}.{js,ts}' && yarn fix:prettier '{*,**/*}.json'"
   },
   "repository": {
     "type": "git",
