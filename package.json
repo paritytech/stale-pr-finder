@@ -6,7 +6,7 @@
   "scripts": {
     "build": "ncc build",
     "typecheck": "tsc --noEmit",
-    "lint": "yarn eslint --quiet '{*,**/*}.{js,ts}' && yarn prettier --check '{*,**/*}.json' && yarn typecheck",
+    "lint": "yarn eslint --quiet '{*,**/*}.{js,ts}' && yarn prettier --check '{*,**/*}.json'",
     "fix:eslint": "eslint --fix",
     "fix:prettier": "prettier --write",
     "fix": "yarn fix:eslint '{*,**/*}.{js,ts}' && yarn fix:prettier '{*,**/*}.json'"
@@ -37,7 +37,6 @@
   },
   "devDependencies": {
     "@eng-automation/js-style": "^2.1.0",
-    "@types/moment": "^2.13.0",
     "@types/node": "^20.4.2",
     "@vercel/ncc": "^0.36.1",
     "typescript": "^5.1.6"
