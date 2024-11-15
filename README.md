@@ -76,6 +76,12 @@ You can find all the inputs in [the action file](./action.yml) but let's walk th
   - **Important**: If set be sure to connect the names by comma.
     - Example: `feature,bug,good first issue`
     - It is **not** _case sensitive_.
+- `ignoredLabels`: Collections of labels separated by commas that should be ignored when searching for a PR.
+  - Short for `Ignore PRs with any of the required labels`.
+  - **optional**
+  - **Important**: If set be sure to connect the names by comma.
+    - Example: `feature,bug,good first issue`
+    - It is **not** _case sensitive_.
 
 #### Accessing other repositories
 

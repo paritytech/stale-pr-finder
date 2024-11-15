@@ -33,6 +33,10 @@ inputs:
     required: false
     description: Collections of labels separated by commas that should be required when searching for a PR.
     type: string
+  ignoredLabels:
+    required: false
+    description: Collections of labels separated by commas that should be ignored when searching for a PR.
+    type: string
 outputs:
   repo:
     description: 'The name of the repo in owner/repo pattern'
