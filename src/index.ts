@@ -107,7 +107,7 @@ const runAction = async (ctx: Context) => {
   const daysStale = isNaN(inputDays) ? 5 : inputDays;
   const stale = isNaN(daysStale);
   const outputFile = getInput("fileOutput", { required: false });
-  console.log("daysStale", daysStale, stale);
+  console.log("daysStale2", daysStale, stale);
 
   const octokit = await github.getInstance({ authType: "token", authToken: token });
   const prs = await getPullRequestWithReviews(octokit, repo);
