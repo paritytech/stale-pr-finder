@@ -39,7 +39,7 @@ const getFiltersFromInput = (): Filters => {
     requiredLabels = labels.split(",");
   }
 
-  let labels = getInput("ignoredLabels");
+  labels = getInput("ignoredLabels");
   if (labels) {
     ignoredLabels = labels.split(",");
   }
