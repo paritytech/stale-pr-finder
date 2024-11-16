@@ -41,10 +41,10 @@ const getFiltersFromInput = (): Filters => {
 
   labels = getInput("ignoredLabels");
   if (labels) {
+    console.log("ignoredLabels: ",labels);
     ignoredLabels = labels.split(",");
   }
   
-
   return { daysStale, noReviews, ignoreDrafts, requiredLabels, ignoredLabels };
 };
 
@@ -74,7 +74,9 @@ const filterPRs = (prs: PullRequest[] | undefined, filters: Filters) => {
     filteredData = filteredData.filter((fd) => withLabels(fd, filters.requiredLabels));
   }
   if (filters.ignoredLabels.length > 0) {
+    console.log("running ignored labels before: ", JSON.stringify(filteredData));
     filteredData = filteredData.filter((fd) => withoutLabels(fd, filters.ignoredLabels));
+    console.log("running ignored labels after: ", JSON.stringify(filteredData));
   }
 
   return filteredData;
