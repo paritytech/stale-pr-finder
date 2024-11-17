@@ -70,6 +70,11 @@ const filterPRs = (prs: PullRequest[] | undefined, filters: Filters) => {
     filteredData = filteredData.filter((pr) => !pr.draft);
   }
   if (filters.requiredLabels.length > 0) {
+    console.log("required labels", JSON.stringify(requiredLabels));
+    filteredData.forEach(function(pr) {
+      console.log(pr.title);
+      console.log(JSON.stringify(pr.labels));
+    });
     filteredData = filteredData.filter((fd) => withLabels(fd, filters.requiredLabels));
   }
   if (filters.ignoredLabels.length > 0) {
