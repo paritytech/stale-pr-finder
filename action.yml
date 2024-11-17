@@ -49,4 +49,4 @@ outputs:
 
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'docker://ghcr.io/paritytech/stale-pr-finder/action:0.2.0'
