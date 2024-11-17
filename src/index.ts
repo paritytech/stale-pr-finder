@@ -74,9 +74,17 @@ const filterPRs = (prs: PullRequest[] | undefined, filters: Filters) => {
     filteredData = filteredData.filter((fd) => withLabels(fd, filters.requiredLabels));
   }
   if (filters.ignoredLabels.length > 0) {
-    console.log("running ignored labels before: ", JSON.stringify(filteredData));
+    console.log("running ignored labels before");
+    filteredData.forEach(function (arrayItem) {
+      console.log(arrayItem.title);
+      console.log(JSON.stringify(arrayItem.labels));
+    });
     filteredData = filteredData.filter((fd) => withoutLabels(fd, filters.ignoredLabels));
-    console.log("running ignored labels after: ", JSON.stringify(filteredData));
+    console.log("running ignored labels after");
+    filteredData.forEach(function (arrayItem) {
+      console.log(arrayItem.title);
+      console.log(JSON.stringify(arrayItem.labels));
+    });
   }
 
   return filteredData;
@@ -107,7 +115,7 @@ const runAction = async (ctx: Context) => {
   const daysStale = isNaN(inputDays) ? 5 : inputDays;
   const stale = isNaN(daysStale);
   const outputFile = getInput("fileOutput", { required: false });
-  console.log("daysStale2", daysStale, stale);
+  console.log("daysStale3", daysStale, stale);
 
   const octokit = await github.getInstance({ authType: "token", authToken: token });
   const prs = await getPullRequestWithReviews(octokit, repo);
