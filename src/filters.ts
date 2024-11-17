@@ -13,4 +13,4 @@ export const withLabels = (pr: PullRequest, labels: string[]): boolean =>
 
 export const withoutLabels = (pr: PullRequest, labels: string[]): boolean =>
   pr.labels &&
-  pr.labels.map((l) => l.name.toLowerCase()).!some((l) => labels.map((label) => label.toLowerCase()).includes(l));
+  pr.labels.map((l) => !l.name.toLowerCase()).some((l) => labels.map((label) => label.toLowerCase()).includes(l));
