@@ -70,11 +70,6 @@ const filterPRs = (prs: PullRequest[] | undefined, filters: Filters) => {
     filteredData = filteredData.filter((pr) => !pr.draft);
   }
   if (filters.requiredLabels.length > 0) {
-    console.log("required labels", JSON.stringify(filters.requiredLabels));
-    filteredData.forEach(function(pr) {
-      console.log(pr.title);
-      console.log(JSON.stringify(pr.labels));
-    });
     filteredData = filteredData.filter((fd) => withLabels(fd, filters.requiredLabels));
   }
   if (filters.ignoredLabels.length > 0) {
@@ -107,9 +102,8 @@ const runAction = async (ctx: Context) => {
 
   const inputDays = Number.parseInt(getInput("days-stale", { required: false }));
   const daysStale = isNaN(inputDays) ? 5 : inputDays;
-  const stale = isNaN(daysStale);
   const outputFile = getInput("fileOutput", { required: false });
-  console.log("daysStale", daysStale, stale);
+  console.log("daysStale", daysStale);
 
   const octokit = await github.getInstance({ authType: "token", authToken: token });
   const prs = await getPullRequestWithReviews(octokit, repo);
