@@ -45,9 +45,9 @@ const getFiltersFromInput = (): Filters => {
     requiredLabels = labels.split(",");
   }
 
-  labels = getInput("ignoredLabels");
-  if (labels) {
-    ignoredLabels = labels.split(",");
+  let ignoredLabelsInput = getInput("ignoredLabels");
+  if (ignoredLabelsInput) {
+    ignoredLabels = ignoredLabelsInput.split(",");
   }
 
   return { daysStale, noReviews, ignoreDrafts, requiredLabels, ignoredLabels };
