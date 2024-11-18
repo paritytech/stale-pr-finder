@@ -5,11 +5,17 @@ import { github } from "@eng-automation/integrations";
 import { writeFile } from "fs";
 import moment from "moment";
 
-import { withLabels, withoutLabels, byNoReviews, olderThanDays } from "./filters";
+import { byNoReviews, olderThanDays, withLabels, withoutLabels } from "./filters";
 import { getPullRequestWithReviews } from "./githubApi";
 import { PullRequest, Repo } from "./types";
 
-type Filters = { daysStale: number; noReviews: boolean; ignoreDrafts: boolean; requiredLabels: string[], ignoredLabels: string[] };
+type Filters = {
+  daysStale: number;
+  noReviews: boolean;
+  ignoreDrafts: boolean;
+  requiredLabels: string[];
+  ignoredLabels: string[];
+};
 
 const daysSinceDate = (date: string): number => moment().diff(moment(date), "days");
 
@@ -43,7 +49,7 @@ const getFiltersFromInput = (): Filters => {
   if (labels) {
     ignoredLabels = labels.split(",");
   }
-  
+
   return { daysStale, noReviews, ignoreDrafts, requiredLabels, ignoredLabels };
 };
 

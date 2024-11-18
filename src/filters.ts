@@ -9,8 +9,12 @@ export const byNoReviews = (pr: PullRequest): boolean => !pr.reviews || pr.revie
 
 export const withLabels = (pr: PullRequest, labels: string[]): boolean =>
   pr.labels &&
-  pr.labels.map((prl) => prl.name.toLowerCase()).some((prl) => labels.map((label) => label.toLowerCase()).includes(prl));
+  pr.labels
+    .map((prl) => prl.name.toLowerCase())
+    .some((prl) => labels.map((label) => label.toLowerCase()).includes(prl));
 
 export const withoutLabels = (pr: PullRequest, labels: string[]): boolean =>
   pr.labels &&
-  !pr.labels.map((prl) => prl.name.toLowerCase()).some((prl) => labels.map((label) => label.toLowerCase()).includes(prl));
+  !pr.labels
+    .map((prl) => prl.name.toLowerCase())
+    .some((prl) => labels.map((label) => label.toLowerCase()).includes(prl));
