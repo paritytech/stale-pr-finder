@@ -40,12 +40,12 @@ const getFiltersFromInput = (): Filters => {
 
   let requiredLabels: string[] = [];
   let ignoredLabels: string[] = [];
-  let labels = getInput("requiredLabels");
+  const labels = getInput("requiredLabels");
   if (labels) {
     requiredLabels = labels.split(",");
   }
 
-  let ignoredLabelsInput = getInput("ignoredLabels");
+  const ignoredLabelsInput = getInput("ignoredLabels");
   if (ignoredLabelsInput) {
     ignoredLabels = ignoredLabelsInput.split(",");
   }
