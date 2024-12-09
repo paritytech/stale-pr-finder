@@ -5,11 +5,17 @@ import { github } from "@eng-automation/integrations";
 import { writeFile } from "fs";
 import moment from "moment";
 
-import { byLabels, byNoReviews, olderThanDays } from "./filters";
+import { byNoReviews, olderThanDays, withLabels, withoutLabels } from "./filters";
 import { getPullRequestWithReviews } from "./githubApi";
 import { PullRequest, Repo } from "./types";
 
-type Filters = { daysStale: number; noReviews: boolean; ignoreDrafts: boolean; requiredLabels: string[] };
+type Filters = {
+  daysStale: number;
+  noReviews: boolean;
+  ignoreDrafts: boolean;
+  requiredLabels: string[];
+  ignoredLabels: string[];
+};
 
 const daysSinceDate = (date: string): number => moment().diff(moment(date), "days");
 
@@ -33,12 +39,18 @@ const getFiltersFromInput = (): Filters => {
   const ignoreDrafts = getInput("ignoreDrafts") ? getBooleanInput("ignoreDrafts") : true;
 
   let requiredLabels: string[] = [];
+  let ignoredLabels: string[] = [];
   const labels = getInput("requiredLabels");
   if (labels) {
     requiredLabels = labels.split(",");
   }
 
-  return { daysStale, noReviews, ignoreDrafts, requiredLabels };
+  const ignoredLabelsInput = getInput("ignoredLabels");
+  if (ignoredLabelsInput) {
+    ignoredLabels = ignoredLabelsInput.split(",");
+  }
+
+  return { daysStale, noReviews, ignoreDrafts, requiredLabels, ignoredLabels };
 };
 
 const generateMarkdownMessage = (prs: PullRequest[], repo: { owner: string; repo: string }) => {
@@ -64,7 +76,10 @@ const filterPRs = (prs: PullRequest[] | undefined, filters: Filters) => {
     filteredData = filteredData.filter((pr) => !pr.draft);
   }
   if (filters.requiredLabels.length > 0) {
-    filteredData = filteredData.filter((fd) => byLabels(fd, filters.requiredLabels));
+    filteredData = filteredData.filter((fd) => withLabels(fd, filters.requiredLabels));
+  }
+  if (filters.ignoredLabels.length > 0) {
+    filteredData = filteredData.filter((fd) => withoutLabels(fd, filters.ignoredLabels));
   }
 
   return filteredData;
@@ -93,9 +108,8 @@ const runAction = async (ctx: Context) => {
 
   const inputDays = Number.parseInt(getInput("days-stale", { required: false }));
   const daysStale = isNaN(inputDays) ? 5 : inputDays;
-  const stale = isNaN(daysStale);
   const outputFile = getInput("fileOutput", { required: false });
-  console.log("daysStale", daysStale, stale);
+  console.log("daysStale", daysStale);
 
   const octokit = await github.getInstance({ authType: "token", authToken: token });
   const prs = await getPullRequestWithReviews(octokit, repo);
