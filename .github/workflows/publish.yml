@@ -63,7 +63,7 @@ jobs:
       - uses: actions/checkout@v3.3.0
         with:
           fetch-depth: 0
-      - uses: butlerlogic/action-autotag@stable
+      - uses: butlerlogic/action-autotag@@1.1.2
         id: autotag
         with:
           head_branch: master
